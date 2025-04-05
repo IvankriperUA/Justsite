@@ -16,8 +16,8 @@
         body {
             font-family: 'Montserrat', sans-serif;
             font-weight: 200;
-            color: var(--tg-theme-text-color);
-            background: var(--tg-theme-bg-color);
+            color: var(--tg-theme-text-color, #222);
+            background: var(--tg-theme-bg-color, #f9f9f9);
         }
 
         #main {
@@ -44,24 +44,40 @@
         button {
             border: 0;
             border-radius: 5px;
-            margin-top: 50px;
-            height: 60px;
+            margin-top: 20px;
+            height: 50px;
             width: 200px;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 500;
             cursor: pointer;
-            transition: all 500ms ease;
-            color: var(--tg-theme-text-color);
-            background: var(--tg-theme-button-text-color);
+            transition: all 300ms ease;
+            color: var(--tg-theme-text-color, #fff);
+            background: var(--tg-theme-button-text-color, #0088cc);
+        }
+
+        input {
+            display: block;
+            width: 80%;
+            margin: 10px auto;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
-     <div id="main">
-         <h1>Онлайн магазин</h1>
-         <img src="https://cdn-icons-png.flaticon.com/512/3044/3044876.png">
-         <p>Lorem ipsum sit amet, consectetur adipisicing elit. Accusantium ipsum magni, molestias.</p>
-         <button id="buy">Купити</button>
-     </div>
+    <div id="main">
+        <h1>Онлайн магазин</h1>
+        <img src="https://cdn-icons-png.flaticon.com/512/3044/3044876.png">
+        <p>Lorem ipsum sit amet, consectetur adipisicing elit. Accusantium ipsum magni, molestias.</p>
+        <button id="buy" type="button">Купити</button>
+
+        <form id="form">
+            <input type="text" placeholder="Ім'я" id="user_name">
+            <input type="text" placeholder="Email" id="user_email">
+            <input type="text" placeholder="Телефон" id="user_phone">
+            <button id="order" type="submit">Оформити</button>
+        </form>
+    </div>
 </body>
 </html>
