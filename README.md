@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Shop</title>
-    <script src="https://telegram.org/js/telegram-web-app.js?56"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;500&display=swap');
 
@@ -44,15 +44,14 @@
         button {
             border: 0;
             border-radius: 5px;
-            margin-top: 50px;
-            height: 60px;
+            margin-top: 20px;
+            height: 50px;
             width: 200px;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 500;
             cursor: pointer;
-            transition: all 500ms ease;
             color: var(--tg-theme-text-color);
-            background: var(--tg-theme-button-text-color);
+            background: var(--tg-theme-button-color);
         }
 
         #form {
@@ -78,46 +77,51 @@
 <body>
     <div id="main">
         <h1>Онлайн магазин</h1>
-        <img src="https://cdn-icons-png.flaticon.com/512/3044/3044876.png">
+        <img src="https://cdn-icons-png.flaticon.com/512/3044/3044876.png" alt="icon">
         <p>Lorem ipsum sit amet, consectetur adipisicing elit. Accusantium ipsum magni, molestias.</p>
         <button id="buy">Купити</button>
     </div>
 
-    <form id="form">
+    <div id="form">
         <input type="text" placeholder="Ім'я" id="user_name">
         <input type="text" placeholder="Email" id="user_email">
         <input type="text" placeholder="Телефон" id="user_phone">
         <p id="error"></p>
         <button id="order">Оформити</button>
-    </form>
+    </div>
 
     <script>
-        let tg = window.Telegram.WebApp;
-        let buy = document.getElementById("buy");
-        let order = document.getElementById("order");
+        const tg = window.Telegram.WebApp;
+        const buy = document.getElementById("buy");
+        const order = document.getElementById("order");
+
         tg.expand();
 
         buy.addEventListener("click", () => {
             document.getElementById("main").style.display = "none";
             document.getElementById("form").style.display = "block";
-            document.getElementById("user_name").value =
-                (tg.initDataUnsafe.first_name || "") + " " + (tg.initDataUnsafe.last_name || "");
+
+            const firstName = tg.initDataUnsafe?.user?.first_name || "";
+            const lastName = tg.initDataUnsafe?.user?.last_name || "";
+
+            document.getElementById("user_name").value = firstName + " " + lastName;
         });
 
-        order.addEventListener("click", (event) => {
-            event.preventDefault();
+        order.addEventListener("click", (e) => {
+            e.preventDefault();
+
             document.getElementById("error").innerText = "";
 
-            let name = document.getElementById("user_name").value.trim();
-            let email = document.getElementById("user_email").value.trim();
-            let phone = document.getElementById("user_phone").value.trim();
+            const name = document.getElementById("user_name").value.trim();
+            const email = document.getElementById("user_email").value.trim();
+            const phone = document.getElementById("user_phone").value.trim();
 
             if (name.length < 5) {
                 document.getElementById("error").innerText = "Помилка в полі Ім'я";
                 return;
             }
 
-            if (email.length < 5) {
+            if (email.length < 5 || !email.includes("@")) {
                 document.getElementById("error").innerText = "Помилка в полі Email";
                 return;
             }
@@ -127,7 +131,7 @@
                 return;
             }
 
-            let data = {
+            const data = {
                 name: name,
                 email: email,
                 phone: phone
